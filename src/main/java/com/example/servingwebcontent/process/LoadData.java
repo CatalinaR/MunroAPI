@@ -2,18 +2,18 @@ package com.example.servingwebcontent.process;
 
 import com.example.servingwebcontent.model.MunroDto;
 import com.google.common.base.Splitter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProcessData {
+@Configuration
+public class LoadData {
 
-    public ProcessData(){
-        
-    }
-
-    public List<MunroDto> processCSVFile() throws IOException {
+    @Bean
+    public List<MunroDto> processCSVFile()  {
         List<String> inputList = readFromFile();
         List<MunroDto> munroDtos = new ArrayList<>();
         String[] properties = inputList.get(0).split(",");
@@ -37,7 +37,7 @@ public class ProcessData {
         return munroDtos;
     }
 
-    private List<String> readFromFile() throws IOException {
+    private List<String> readFromFile() {
         List<String> inputList = new ArrayList<>();
         String line ="";
         try{
@@ -47,7 +47,7 @@ public class ProcessData {
                 inputList.add(line);
             }
 
-        }  catch (FileNotFoundException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
         return inputList;
