@@ -29,4 +29,12 @@ public class MunroClient {
         return "jsonTemplate";
     }
 
+    @GetMapping("/munroSortedByName")
+    public String getHillTypeByName(@RequestParam(name = "type", required = false, defaultValue = "MUN") String name,
+                                    @RequestParam(name = "nameOrder", required = false, defaultValue ="ascending") String nameOrder,
+                                    Model model){
+        model.addAttribute("munroByHeight", munroService.getMunroDtoListSortedByName(name, nameOrder));
+        return "jsonTemplate";
+    }
+
 }

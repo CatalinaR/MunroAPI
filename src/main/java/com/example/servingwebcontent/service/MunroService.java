@@ -44,4 +44,19 @@ public class MunroService {
         return null;
     }
 
+    public List<MunroDto> getMunroDtoListSortedByName(String name, String nameOrder){
+        if(nameOrder.toLowerCase().equals("ascending")){
+            return munroDtoList.stream()
+                    .filter(a -> a.getHillCategory().equals(name))
+                    .sorted(Comparator.comparing(MunroDto::getName))
+                    .collect(Collectors.toList());
+        } else if(nameOrder.toLowerCase().equals("descending")){
+            return munroDtoList.stream()
+                    .filter(a -> a.getHillCategory().equals(name))
+                    .sorted(Comparator.comparing(MunroDto::getName).reversed())
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
 }
