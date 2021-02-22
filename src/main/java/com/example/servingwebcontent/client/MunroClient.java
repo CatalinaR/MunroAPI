@@ -13,7 +13,7 @@ public class MunroClient {
     @Autowired
     private MunroService munroService;
 
-    @GetMapping("/hillCategory")
+    @GetMapping("/munroAll")
     public String getHillType(@RequestParam(name = "type", required=false, defaultValue = "MUN")String name,
                               Model model){
         model.addAttribute("munro", munroService.getMunroDtoList(name));
@@ -21,23 +21,15 @@ public class MunroClient {
     }
 
 
-    @GetMapping("/munroSortedByHeight")
+    @GetMapping("/munro")
     public String getHillTypeByHeight(@RequestParam(name = "type", required = false, defaultValue = "MUN") String name,
-                                      @RequestParam(name = "height", required = false, defaultValue ="ascending") String heightSort,
+                                      @RequestParam(name = "height", required = false, defaultValue ="any") String heightSort,
+                                      @RequestParam(name = "nameOrder", required = false, defaultValue ="any") String orderNameMunro,
                                       @RequestParam(name = "limit", required = false, defaultValue = "0") String limit,
                                       @RequestParam(name = "minHeight", required = false, defaultValue = "0") String minHeight,
                                       @RequestParam(name = "maxHeight", required = false, defaultValue = "0") String maxHeight,
                                       Model model){
-        model.addAttribute("munroByHeight", munroService.getMunroDtoListSortedByHeight(name, heightSort, limit, minHeight, maxHeight));
-        return "jsonTemplate";
-    }
-
-    @GetMapping("/munroSortedByName")
-    public String getHillTypeByName(@RequestParam(name = "type", required = false, defaultValue = "MUN") String name,
-                                    @RequestParam(name = "nameOrder", required = false, defaultValue ="ascending") String nameOrder,
-                                    @RequestParam(name = "limit", required = false, defaultValue = "0") String limit,
-                                    Model model){
-        model.addAttribute("munroByHeight", munroService.getMunroDtoListSortedByName(name, nameOrder, limit));
+        model.addAttribute("munro", munroService.getMunroDtoListSortedByFilters(name, heightSort, limit, minHeight, maxHeight, orderNameMunro));
         return "jsonTemplate";
     }
 
